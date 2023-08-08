@@ -3,12 +3,10 @@ services:
   chatgpt-on-wechat:
     image: zhayujie/chatgpt-on-wechat
     container_name: chatgpt-on-wechat
-    volumes:
-      - /data/ChatGPT-on-WeChat-0806/app.py:/app.py
     security_opt:
       - seccomp:unconfined
     environment:
-      OPEN_AI_API_KEY: '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'
+      OPEN_AI_API_KEY: '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'
       MODEL: 'gpt-3.5-turbo'
       PROXY: ''
       SINGLE_CHAT_PREFIX: '[""]'
