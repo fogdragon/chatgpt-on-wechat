@@ -27,6 +27,7 @@ def run():
     try:
         # load config
         load_config()
+        logger.info("load config")
         # ctrl + c
         sigterm_handler_wrap(signal.SIGINT)
         # kill signal
