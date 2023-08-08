@@ -8,7 +8,7 @@ services:
     security_opt:
       - seccomp:unconfined
     environment:
-      OPEN_AI_API_KEY: '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'
+      OPEN_AI_API_KEY: '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'
       MODEL: 'gpt-3.5-turbo'
       PROXY: ''
       SINGLE_CHAT_PREFIX: '[""]'
