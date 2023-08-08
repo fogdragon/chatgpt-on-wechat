@@ -4,7 +4,7 @@ services:
     image: zhayujie/chatgpt-on-wechat
     container_name: chatgpt-on-wechat
     volumes:
-      - /data/ChatGPT-on-WeChat-0806:/
+      - /data/ChatGPT-on-WeChat-0806/app.py:/app.py
     security_opt:
       - seccomp:unconfined
     environment:
