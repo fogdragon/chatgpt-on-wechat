@@ -57,9 +57,9 @@ class ChatGPTBot(Bot, OpenAIImage):
         logger.info(completion.choices[0]["message"]["content"])
 
         return {
-            "total_tokens": response["usage"]["total_tokens"],
-            "completion_tokens": response["usage"]["completion_tokens"],
-            "content": response.choices[0]["message"]["content"],
+            "total_tokens": completion["usage"]["total_tokens"],
+            "completion_tokens": completion["usage"]["completion_tokens"],
+            "content": completion.choices[0]["message"]["content"],
         }
 
     def json_gpt(self, input: str):
