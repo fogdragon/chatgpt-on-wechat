@@ -185,9 +185,9 @@ class ChatGPTBot(Bot, OpenAIImage):
 
         formatted_top_results = [
             {
-                "title": article["title"],
-                "link": article["link"],
-                "snippet": article["snippet"],
+                "标题": article["title"],
+                "链接": article["link"],
+                "摘要": article["snippet"],
             }
             for article, _score in sorted_articles[0:5]
         ]
@@ -228,7 +228,7 @@ class ChatGPTBot(Bot, OpenAIImage):
             choice = self.choice_agent_with_query(query)
             if ("<!--WEB-SEARCH-GO-->" in choice["content"]):
                 reply_content = self.reply_search(query)
-                reply = Reply(ReplyType.TEXT, reply_content["content"])
+                reply = Reply(ReplyType.TEXT, reply_content)
                 self.sessions[session.session_id].set_system_prompt
                 return reply
 
