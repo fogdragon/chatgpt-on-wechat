@@ -186,7 +186,7 @@ class ChatGPTBot(Bot, OpenAIImage):
 
         result = ""
         for article in sorted_articles[:5]:
-            result += f"标题：{article['title']}\n网址：{article['link']}\n摘要：{article['snippet']}\n\n"
+            result += f"""标题：{article["title"]}\n网址：{article["link"]}\n摘要：{article["snippet"]}\n\n"""
         return result
 
     def reply(self, query, context=None):
