@@ -184,10 +184,10 @@ class ChatGPTBot(Bot, OpenAIImage):
             print("Score:", score)
             print()
 
-        result = ""
-        for article in sorted_articles[:5]:
-            result += f"""标题：{article["title"]}\n网址：{article["link"]}\n摘要：{article["snippet"]}\n\n"""
-        return result
+       ret_string = ""
+       for article in sorted_articles[0:5]:
+           ret_string += article['title'] + "\n" + article['link'] + "\n" + article['link'] + "\n\n"
+        return ret_string
 
     def reply(self, query, context=None):
         # acquire reply content
