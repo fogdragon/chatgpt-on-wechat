@@ -53,6 +53,8 @@ class ChatGPTBot(Bot, OpenAIImage):
             """,
             temperature=0.5,
         )
+        logger.info(response.choices[0]["message"]["content"])
+        
         return {
             "total_tokens": response["usage"]["total_tokens"],
             "completion_tokens": response["usage"]["completion_tokens"],
@@ -71,6 +73,7 @@ class ChatGPTBot(Bot, OpenAIImage):
 
         text = completion.choices[0].message.content
         parsed = json.loads(text)
+        logger.info(parsed)
 
         return parsed
 
@@ -331,7 +334,7 @@ class AzureChatGPTBot(ChatGPTBot):
             status = ""
             image_url = ""
             while status != "Succeeded":
-                logger.info("waiting for image create..., " + status + ",retry after " + retry_after + " seconds")
+                <logger.info(>"waiting for image create..., " + status + ",retry after " + retry_after + " seconds")
                 time.sleep(int(retry_after))
                 response = requests.get(operation_location, headers=headers)
                 status = response.json()["status"]
