@@ -217,8 +217,8 @@ class ChatGPTBot(Bot, OpenAIImage):
             #     # reply in stream
             #     return self.reply_text_stream(query, new_query, session_id)
 
-            reply = choice_chain(query)
-            if（"<!--WEB-SEARCH-GO-->" in reply_content["content"]):
+            reply_content = self.choice_chain(query)
+            if ("<!--WEB-SEARCH-GO-->" in reply_content["content"]):
                 reply_content = reply_search(query)
                 self.sessions[session.session_id].set_system_prompt
                 return reply
