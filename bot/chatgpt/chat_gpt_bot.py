@@ -229,7 +229,7 @@ class ChatGPTBot(Bot, OpenAIImage):
             if ("<!--WEB-SEARCH-GO-->" in choice["content"]):
                 reply_content = self.reply_search(query)
                 reply = Reply(ReplyType.TEXT, reply_content)
-                self.sessions[session.session_id].set_system_prompt
+                #self.sessions[session.session_id].set_system_prompt
                 return reply
 
             reply_content = self.reply_text(session, api_key, args=new_args)
