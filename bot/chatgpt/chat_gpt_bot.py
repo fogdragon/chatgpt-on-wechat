@@ -19,6 +19,7 @@ from config import conf, load_config
 
 # OpenAI对话模型API (可用)
 class ChatGPTBot(Bot, OpenAIImage):
+
     def __init__(self):
         super().__init__()
         # set the default api_key
@@ -42,6 +43,127 @@ class ChatGPTBot(Bot, OpenAIImage):
             "request_timeout": conf().get("request_timeout", None),  # 请求超时时间，openai接口默认设置为600，对于难问题一般需要较长时间
             "timeout": conf().get("request_timeout", None),  # 重试超时时间，在这个时间内，将会自动重试
         }
+
+    def json_gpt(input: str):
+        completion = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo-16k-0613",
+            messages=[
+                {"role": "system", "content": "Output only valid JSON"},
+                {"role": "user", "content": input},
+            ],
+            temperature=0.5,
+        )
+
+    def embeddings(input: list[str]) -> list[list[str]]:
+        response = openai.Embedding.create(model="text-embedding-ada-002", input=input)
+    return [data.embedding for data in response.data]
+
+    def search_web(
+        query: str,
+        google_search_key: str = "AIzaSyAQ70Mo8f138l32jxqr3ZuDXS4jy99lA2g",
+        cx: str = "f1bbdda6e1ffe40d5",
+    ) -> dict:
+        response = requests.get(
+            "https://www.googleapis.com/customsearch/v1/siterestrict",
+            params={
+                "q": query,
+                "key": google_search_key,
+                "cx": cx,
+            },
+        )
+
+    def reply_search(query):
+        QUERIES_INPUT = f"""
+        You have access to a search API that returns recent news articles.
+        Generate an array of search queries that are relevant to this question.
+        Use a variation of related keywords for the queries, trying to be as general as possible.
+        Include as many queries as you can think of, including and excluding terms.
+        For example, include queries like ['keyword_1 keyword_2', 'keyword_1', 'keyword_2'].
+        Be creative. The more queries you include, the more likely you are to find relevant results.
+
+        User question: {query}
+
+        Format: {{"queries": ["query_1", "query_2", "query_3"]}}
+        """
+
+        queries = json_gpt(QUERIES_INPUT)["queries"]
+
+        # Let's include the original question as well for good measure
+        queries.append(query)
+
+        queries
+
+        articles = []
+        i = 0
+
+        for query in tqdm(queries):
+            result = search_web(query)
+            i = i + 1
+            if (i > 3):
+              break
+            if result.get("error") is None:
+                articles = articles + result["items"]
+            else:
+                raise Exception(result["error"])
+
+        # remove duplicates
+        articles = list({article["link"]: article for article in articles}.values())
+
+        print("Total number of articles:", len(articles))
+
+        HA_INPUT = f"""
+        Generate a hypothetical answer to the user's question. This answer will be used to rank search results.
+        Pretend you have all the information you need to answer, but don't use any actual facts. Instead, use placeholders
+        like NAME did something, or NAME said something at PLACE.
+
+        User question: {query}
+
+        Format: {{"hypotheticalAnswer": "hypothetical answer text"}}
+        """
+
+        hypothetical_answer = json_gpt(HA_INPUT)["hypotheticalAnswer"]
+
+        hypothetical_answer
+
+        hypothetical_answer_embedding = embeddings(hypothetical_answer)[0]
+        article_embeddings = embeddings(
+            [
+                f"{article['title']} {article['link']} {article['snippet'][0:100]}"
+                for article in articles
+            ]
+        )
+
+        # Calculate cosine similarity
+        cosine_similarities = []
+        for article_embedding in article_embeddings:
+            cosine_similarities.append(dot(hypothetical_answer_embedding, article_embedding))
+
+        cosine_similarities[0:10]
+
+        scored_articles = zip(articles, cosine_similarities)
+
+        # Sort articles by cosine similarity
+        sorted_articles = sorted(scored_articles, key=lambda x: x[1], reverse=True)
+
+        # Print top 5 articles
+        print("Top 5 articles:", "\n")
+
+        for article, score in sorted_articles[0:5]:
+            print("Title:", article["title"])
+            print("link:", article["link"])
+            print("snippet:", article["snippet"])
+            print("Score:", score)
+            print()
+
+        formatted_top_results = [
+            {
+                "title": article["title"],
+                "link": article["link"],
+                "snippet": article["snippet"],
+            }
+            for article, _score in sorted_articles[0:5]
+        ]
+        return formatted_top_results
 
     def reply(self, query, context=None):
         # acquire reply content
@@ -85,6 +207,8 @@ class ChatGPTBot(Bot, OpenAIImage):
                 )
             )
             if reply_content["completion_tokens"] == 0 and len(reply_content["content"]) > 0:
+                if（"我的知识截至日期是2021年9月1日!" in reply_content["content"]):
+                    reply_content = reply_search(query)
                 reply = Reply(ReplyType.ERROR, reply_content["content"])
             elif reply_content["completion_tokens"] > 0:
                 self.sessions.session_reply(reply_content["content"], session_id, reply_content["total_tokens"])
