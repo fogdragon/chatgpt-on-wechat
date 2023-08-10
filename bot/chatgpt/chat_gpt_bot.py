@@ -47,8 +47,10 @@ class ChatGPTBot(Bot, OpenAIImage):
     def choice_chain(query):
         completion = openai.ChatCompletion.create(
             model="gpt-3.5-turbo-16k-0613",
-            messages=f"请针对 >>> 和 <<< 中间的用户问题，判断是否属于无法提供最新的信息或数据，是否涉及特定的法律、科技、医学或政治领域，是否需要个性化或地域化的信息时，如果属于上述范畴，请你直接回复：<!--WEB-SEARCH-GO-->。
-            >>> {query}  <<< ",
+            messages=f"""
+            请针对 >>> 和 <<< 中间的用户问题，判断是否属于无法提供最新的信息或数据，是否涉及特定的法律、科技、医学或政治领域，是否需要个性化或地域化的信息时，如果属于上述范畴，请你直接回复：<!--WEB-SEARCH-GO-->。
+            >>> {query}  <<<
+            """,
             temperature=0.5,
         )
         return {
