@@ -220,7 +220,7 @@ class ChatGPTBot(Bot, OpenAIImage):
             #     # reply in stream
             #     return self.reply_text_stream(query, new_query, session_id)
 
-            choice = self.choice_agent_with_query(query)
+            choice = self.choice_agent_with_query("请提供2023年恒大地产的财务报表分析？")
             if ("<!--WEB-SEARCH-GO-->" in choice["content"]):
                 reply_content = reply_search(query)
                 reply = Reply(ReplyType.TEXT, reply_content["content"])
