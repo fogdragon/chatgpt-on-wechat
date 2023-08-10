@@ -177,10 +177,14 @@ class ChatGPTBot(Bot, OpenAIImage):
         # Print top 5 articles
         print("Top 5 articles:", "\n")
 
+        ret_string = "作为一个语言模型，我无法提供实时的信息或最新消息。我通过搜索为您搜索到下列信息供您参考：\n"
         for article, score in sorted_articles[0:5]:
             print("Title:", article["title"])
+            ret_string += "标题：" + article["title"] + "\n"
             print("link:", article["link"])
+            ret_string += "网址：" + article["link"] + "\n"
             print("snippet:", article["snippet"])
+            ret_string += "简介：" + article["snippet"] + "\n"
             print("Score:", score)
             print()
 
