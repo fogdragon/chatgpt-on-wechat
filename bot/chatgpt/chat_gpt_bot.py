@@ -58,7 +58,7 @@ class ChatGPTBot(Bot, OpenAIImage):
             "completion_tokens": response["usage"]["completion_tokens"],
             "content": response.choices[0]["message"]["content"],
         }
-                ：
+
     def json_gpt(input: str):
         completion = openai.ChatCompletion.create(
             model="gpt-3.5-turbo-16k-0613",
