@@ -109,7 +109,7 @@ class ChatGPTBot(Bot, OpenAIImage):
         Format: {{"queries": ["query_1", "query_2", "query_3"]}}
         """
 
-        queries = json_gpt(QUERIES_INPUT)["queries"]
+        queries = self.json_gpt(QUERIES_INPUT)["queries"]
 
         # Let's include the original question as well for good measure
         queries.append(query)
@@ -120,7 +120,7 @@ class ChatGPTBot(Bot, OpenAIImage):
         i = 0
 
         for query in queries:
-            result = search_web(query)
+            result = self.search_web(query)
             i = i + 1
             if (i > 3):
               break
@@ -148,7 +148,7 @@ class ChatGPTBot(Bot, OpenAIImage):
 
         hypothetical_answer
 
-        hypothetical_answer_embedding = embeddings(hypothetical_answer)[0]
+        hypothetical_answer_embedding = self.embeddings(hypothetical_answer)[0]
         article_embeddings = embeddings(
             [
                 f"{article['title']} {article['link']} {article['snippet'][0:100]}"
@@ -220,9 +220,9 @@ class ChatGPTBot(Bot, OpenAIImage):
             #     # reply in stream
             #     return self.reply_text_stream(query, new_query, session_id)
 
-            choice = choice_agent_with_query(query)
+            choice = self.choice_agent_with_query(query)
             if ("<!--WEB-SEARCH-GO-->" in choice["content"]):
-                reply_content = reply_search(query)
+                reply_content = self.reply_search(query)
                 reply = Reply(ReplyType.TEXT, reply_content["content"])
                 self.sessions[session.session_id].set_system_prompt
                 return reply
