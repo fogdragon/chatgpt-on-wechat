@@ -191,7 +191,8 @@ class ChatGPTBot(Bot, OpenAIImage):
             }
             for article, _score in sorted_articles[0:5]
         ]
-        return formatted_top_results
+        my_string = ''.join(formatted_top_results)
+        return my_string
 
     def reply(self, query, context=None):
         # acquire reply content
