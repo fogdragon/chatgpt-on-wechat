@@ -55,6 +55,7 @@ class ChatGPTBot(Bot, OpenAIImage):
             ],
             temperature=0.5,
         )
+        logger.info(messages[0])
         logger.info(completion.choices[0]["message"]["content"])
 
         return {
@@ -184,7 +185,7 @@ class ChatGPTBot(Bot, OpenAIImage):
             print("link:", article["link"])
             ret_string += "网址：" + article["link"] + "\n"
             print("snippet:", article["snippet"])
-            ret_string += "简介：" + article["snippet"] + "\n"
+            ret_string += "简介：" + article["snippet"] + "\n\n"
             print("Score:", score)
             print()
 
