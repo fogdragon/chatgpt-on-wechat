@@ -62,12 +62,17 @@ class ChatGPTBot(Bot, OpenAIImage):
     def json_gpt(input: str):
         completion = openai.ChatCompletion.create(
             model="gpt-3.5-turbo-16k-0613",
-            messages="[
+            messages=[
                 {"role": "system", "content": "Output only valid JSON"},
                 {"role": "user", "content": input},
-            ]",
+            ],
             temperature=0.5,
         )
+
+        text = completion.choices[0].message.content
+        parsed = json.loads(text)
+
+        return parsed
 
     def embeddings(input: list[str]) -> list[list[str]]:
         response = openai.Embedding.create(model="text-embedding-ada-002", input=input)
