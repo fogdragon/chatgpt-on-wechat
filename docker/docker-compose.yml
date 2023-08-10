@@ -5,6 +5,8 @@ services:
     container_name: chatgpt-on-wechat
     security_opt:
       - seccomp:unconfined
+    volumes:
+      - /data/ChatGPT-on-WeChat-0806/bot/chat_gpt_bot.py:/bot/chat_gpt_bot.py
     environment:
       OPEN_AI_API_KEY: 'YOUR API KEY'
       MODEL: 'gpt-3.5-turbo-16k-0613'
