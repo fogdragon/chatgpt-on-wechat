@@ -183,7 +183,7 @@ class ChatGPTBot(Bot, OpenAIImage):
             print("Score:", score)
             print()
 
-        for article, _score in sorted_articles[0:5]
+        for article, _score in sorted_articles[0:5]:
             my_string = ''.join(f"标题: {article["title"]}\n 链接: {article["link"]}\n 摘要: {article["snippet"]}")
 
         return my_string
