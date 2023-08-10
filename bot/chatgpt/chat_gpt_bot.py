@@ -94,6 +94,7 @@ class ChatGPTBot(Bot, OpenAIImage):
                 "q": query,
                 "key": google_search_key,
                 "cx": cx,
+                "num": 5,
             },
         )
         return response.json()
@@ -183,10 +184,8 @@ class ChatGPTBot(Bot, OpenAIImage):
             print("Score:", score)
             print()
 
-        for article, _score in sorted_articles[0:5]:
-            my_string = ''.join(f"标题: {article["title"]}\n 链接: {article["link"]}\n 摘要: {article["snippet"]}")
-
-        return my_string
+        result = "\n".join([f"标题：{article['title']}\n网址：{article['link']}\n摘要：{article['snippet']}" for article in sorted_articles[:5]])
+        return result
 
     def reply(self, query, context=None):
         # acquire reply content
