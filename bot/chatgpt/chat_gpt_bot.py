@@ -44,7 +44,7 @@ class ChatGPTBot(Bot, OpenAIImage):
             "timeout": conf().get("request_timeout", None),  # 重试超时时间，在这个时间内，将会自动重试
         }
 
-    def choice_agent_with_query(query):
+    def choice_agent_with_query(self, query):
         completion = openai.ChatCompletion.create(
             model="gpt-3.5-turbo-16k-0613",
             messages=f"""
@@ -61,7 +61,7 @@ class ChatGPTBot(Bot, OpenAIImage):
             "content": response.choices[0]["message"]["content"],
         }
 
-    def json_gpt(input: str):
+    def json_gpt(self, input: str):
         completion = openai.ChatCompletion.create(
             model="gpt-3.5-turbo-16k-0613",
             messages=[
@@ -77,11 +77,11 @@ class ChatGPTBot(Bot, OpenAIImage):
 
         return parsed
 
-    def embeddings(input: list[str]) -> list[list[str]]:
+    def embeddings(self, input: list[str]) -> list[list[str]]:
         response = openai.Embedding.create(model="text-embedding-ada-002", input=input)
         return [data.embedding for data in response.data]
 
-    def search_web(
+    def search_web(self,
         query: str,
         google_search_key: str = "AIzaSyAQ70Mo8f138l32jxqr3ZuDXS4jy99lA2g",
         cx: str = "f1bbdda6e1ffe40d5",
@@ -95,7 +95,7 @@ class ChatGPTBot(Bot, OpenAIImage):
             },
         )
 
-    def reply_search(query):
+    def reply_search(self, query):
         QUERIES_INPUT = f"""
         You have access to a search API that returns recent news articles.
         Generate an array of search queries that are relevant to this question.
