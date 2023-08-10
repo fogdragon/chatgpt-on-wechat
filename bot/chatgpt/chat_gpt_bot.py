@@ -184,8 +184,8 @@ class ChatGPTBot(Bot, OpenAIImage):
             print("Score:", score)
             print()
 
-       ret_string = ""
-       for article in sorted_articles[0:5]:
+        ret_string = ""
+        for article in sorted_articles[0:5]:
            ret_string += article['title'] + "\n" + article['link'] + "\n" + article['link'] + "\n\n"
         return ret_string
 
