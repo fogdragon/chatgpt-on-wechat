@@ -44,7 +44,7 @@ class ChatGPTBot(Bot, OpenAIImage):
             "timeout": conf().get("request_timeout", None),  # 重试超时时间，在这个时间内，将会自动重试
         }
 
-    def choice_chain(query):
+    def choice_agent_with_query(query):
         completion = openai.ChatCompletion.create(
             model="gpt-3.5-turbo-16k-0613",
             messages=f"""
@@ -220,7 +220,7 @@ class ChatGPTBot(Bot, OpenAIImage):
             #     # reply in stream
             #     return self.reply_text_stream(query, new_query, session_id)
 
-            choice = self.choice_chain(query)
+            choice = self.choice_agent_with_query(query)
             if ("<!--WEB-SEARCH-GO-->" in choice["content"]):
                 reply_content = reply_search(query)
                 reply = Reply(ReplyType.TEXT, reply_content["content"])
