@@ -76,7 +76,7 @@ class ChatGPTBot(Bot, OpenAIImage):
 
     def embeddings(input: list[str]) -> list[list[str]]:
         response = openai.Embedding.create(model="text-embedding-ada-002", input=input)
-    return [data.embedding for data in response.data]
+        return [data.embedding for data in response.data]
 
     def search_web(
         query: str,
