@@ -149,7 +149,7 @@ class ChatGPTBot(Bot, OpenAIImage):
         Format: {{"hypotheticalAnswer": "hypothetical answer text"}}
         """
 
-        hypothetical_answer = json_gpt(HA_INPUT)["hypotheticalAnswer"]
+        hypothetical_answer = self.json_gpt(HA_INPUT)["hypotheticalAnswer"]
 
         hypothetical_answer
 
