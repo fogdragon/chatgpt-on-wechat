@@ -44,13 +44,26 @@ class ChatGPTBot(Bot, OpenAIImage):
             "timeout": conf().get("request_timeout", None),  # 重试超时时间，在这个时间内，将会自动重试
         }
 
+    def choice_chain(query):
+        completion = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo-16k-0613",
+            messages=f"请针对 >>> 和 <<< 中间的用户问题，判断是否属于无法提供最新的信息或数据，是否涉及特定的法律、科技、医学或政治领域，是否需要个性化或地域化的信息时，如果属于上述范畴，请你直接回复：<!--WEB-SEARCH-GO-->。
+            >>> {query}  <<< ",
+            temperature=0.5,
+        )
+        return {
+            "total_tokens": response["usage"]["total_tokens"],
+            "completion_tokens": response["usage"]["completion_tokens"],
+            "content": response.choices[0]["message"]["content"],
+        }
+                ：
     def json_gpt(input: str):
         completion = openai.ChatCompletion.create(
             model="gpt-3.5-turbo-16k-0613",
-            messages=[
+            messages="[
                 {"role": "system", "content": "Output only valid JSON"},
                 {"role": "user", "content": input},
-            ],
+            ]",
             temperature=0.5,
         )
 
@@ -197,6 +210,12 @@ class ChatGPTBot(Bot, OpenAIImage):
             #     # reply in stream
             #     return self.reply_text_stream(query, new_query, session_id)
 
+            reply = choice_chain(query)
+            if（"<!--WEB-SEARCH-GO-->" in reply_content["content"]):
+                reply_content = reply_search(query)
+                self.sessions[session.session_id].set_system_prompt
+                return reply
+
             reply_content = self.reply_text(session, api_key, args=new_args)
             logger.debug(
                 "[CHATGPT] new_query={}, session_id={}, reply_cont={}, completion_tokens={}".format(
@@ -207,8 +226,6 @@ class ChatGPTBot(Bot, OpenAIImage):
                 )
             )
             if reply_content["completion_tokens"] == 0 and len(reply_content["content"]) > 0:
-                if（"<!--search_web-->" in reply_content["content"]):
-                    reply_content = reply_search(query)
                 reply = Reply(ReplyType.ERROR, reply_content["content"])
             elif reply_content["completion_tokens"] > 0:
                 self.sessions.session_reply(reply_content["content"], session_id, reply_content["total_tokens"])
