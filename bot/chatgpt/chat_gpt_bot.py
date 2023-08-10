@@ -207,7 +207,7 @@ class ChatGPTBot(Bot, OpenAIImage):
                 )
             )
             if reply_content["completion_tokens"] == 0 and len(reply_content["content"]) > 0:
-                if（"我的知识截至日期是2021年9月1日!" in reply_content["content"]):
+                if（"<!--search_web-->" in reply_content["content"]):
                     reply_content = reply_search(query)
                 reply = Reply(ReplyType.ERROR, reply_content["content"])
             elif reply_content["completion_tokens"] > 0:
