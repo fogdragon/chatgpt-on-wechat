@@ -7,7 +7,7 @@ services:
       - seccomp:unconfined
     volumes:
       - /data/ChatGPT-on-WeChat-0806/app.py:/app/app.py
-      - /data/ChatGPT-on-WeChat-0806/bot/chat_gpt_bot.py:/app/bot/chat_gpt_bot.py
+      - /data/ChatGPT-on-WeChat-0806/bot/:/app/bot/
     environment:
       OPEN_AI_API_KEY: ''
       MODEL: 'gpt-3.5-turbo-16k-0613'
