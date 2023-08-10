@@ -96,6 +96,7 @@ class ChatGPTBot(Bot, OpenAIImage):
                 "cx": cx,
             },
         )
+        return response.json()
 
     def reply_search(self, query):
         QUERIES_INPUT = f"""
@@ -105,6 +106,7 @@ class ChatGPTBot(Bot, OpenAIImage):
         Include as many queries as you can think of, including and excluding terms.
         For example, include queries like ['keyword_1 keyword_2', 'keyword_1', 'keyword_2'].
         Be creative. The more queries you include, the more likely you are to find relevant results.
+        Do not repeat between keywords.
 
         User question: {query}
 
@@ -114,7 +116,8 @@ class ChatGPTBot(Bot, OpenAIImage):
         queries = self.json_gpt(QUERIES_INPUT)["queries"]
 
         # Let's include the original question as well for good measure
-        queries.append(query)
+        if query not in queries:
+            queries.append(query)
 
         queries
 
