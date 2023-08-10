@@ -55,7 +55,8 @@ class ChatGPTBot(Bot, OpenAIImage):
             ],
             temperature=0.5,
         )
-        logger.info(messages[0])
+        logger.info(f"""请针对 >>> 和 <<< 中间的用户问题，判断是否属于无法提供最新的信息或数据，是否涉及特定的法律、科技、医学或政治领域，是否需要个性化或地域化的信息时，如果属于上述范畴，请你直接回复：<!--WEB-SEARCH-GO-->。
+                                >>> {query}  <<< """)
         logger.info(completion.choices[0]["message"]["content"])
 
         return {
