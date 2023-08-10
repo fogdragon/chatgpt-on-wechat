@@ -154,7 +154,7 @@ class ChatGPTBot(Bot, OpenAIImage):
         hypothetical_answer
 
         hypothetical_answer_embedding = self.embeddings(hypothetical_answer)[0]
-        article_embeddings = embeddings(
+        article_embeddings = self.embeddings(
             [
                 f"{article['title']} {article['link']} {article['snippet'][0:100]}"
                 for article in articles
