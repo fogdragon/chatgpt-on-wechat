@@ -5,6 +5,7 @@ import time
 import openai
 import openai.error
 import requests
+import json  # for parsing the JSON api responses and model outputs
 
 from bot.bot import Bot
 from bot.chatgpt.chat_gpt_session import ChatGPTSession
@@ -15,7 +16,7 @@ from bridge.reply import Reply, ReplyType
 from common.log import logger
 from common.token_bucket import TokenBucket
 from config import conf, load_config
-
+from numpy import dot  # for cosine similarity
 
 # OpenAI对话模型API (可用)
 class ChatGPTBot(Bot, OpenAIImage):
