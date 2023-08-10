@@ -54,7 +54,7 @@ class ChatGPTBot(Bot, OpenAIImage):
             ],
             temperature=0.5,
         )
-        logger.info(response.choices[0]["message"]["content"])
+        logger.info(completion.choices[0]["message"]["content"])
 
         return {
             "total_tokens": response["usage"]["total_tokens"],
