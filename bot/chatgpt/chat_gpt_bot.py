@@ -93,7 +93,7 @@ class ChatGPTBot(Bot, OpenAIImage):
                 "q": query,
                 "key": google_search_key,
                 "cx": cx,
-                "num": 5,
+                "num": 3,
             },
         )
         return response.json()
@@ -173,11 +173,11 @@ class ChatGPTBot(Bot, OpenAIImage):
         # Sort articles by cosine similarity
         sorted_articles = sorted(scored_articles, key=lambda x: x[1], reverse=True)
 
-        # Print top 5 articles
-        print("Top 5 articles:", "\n")
+        # Print top 3 articles
+        print("Top 3 articles:", "\n")
 
         ret_string = "作为一个语言模型，我无法提供实时的信息或最新消息。我通过搜索为您搜索到下列信息供您参考：\n"
-        for article, score in sorted_articles[0:5]:
+        for article, score in sorted_articles[0:3]:
             print("Title:", article["title"])
             ret_string += "标题：" + article["title"] + "\n"
             print("link:", article["link"])
