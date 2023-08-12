@@ -8,6 +8,7 @@ services:
     volumes:
       - /data/ChatGPT-on-WeChat-0806/app.py:/app/app.py
       - /data/ChatGPT-on-WeChat-0806/bot/:/app/bot/
+      - /data/ChatGPT-on-WeChat-0806/config.json:/app/config.json
     environment:
       OPEN_AI_API_KEY: ''
       MODEL: 'gpt-3.5-turbo-16k-0613'
