@@ -48,6 +48,7 @@ def run():
         #    PluginManager().load_plugins()
 
         # startup channel
+        logger.info("channel startup")
         channel.startup()
     except Exception as e:
         logger.error("App startup failed!")
