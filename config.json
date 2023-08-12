@@ -59,7 +59,7 @@
     "wechatmp_aes_key": "",
     "wechatcom_corp_id": "ww6fcd2f32edbc3cb0",
     "wechatcomapp_token": "VnBfpUdLxvRvXbqQqxiCtFydagqD9",
-    "wechatcomapp_port": 9898,
+    "wechatcomapp_port": 80,
     "wechatcomapp_secret": "bkduxK6BS6yslo24Ke0zgm3W-by78US2k8nw5r5Yc4w",
     "wechatcomapp_agent_id": "1000016",
     "wechatcomapp_aes_key": "8aidHKTzRTBgIZaUSkmC5htfDB6N6ETkZrQAg95aHmB",
