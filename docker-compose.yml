@@ -8,6 +8,7 @@ services:
     volumes:
       - /data/ChatGPT-on-WeChat-0806/app.py:/app/app.py
       - /data/ChatGPT-on-WeChat-0806/bot/:/app/bot/
+      - /data/ChatGPT-on-WeChat-0806/channel/:/app/channel/
       - /data/ChatGPT-on-WeChat-0806/config.json:/app/config.json
       - /data/ChatGPT-on-WeChat-0806/plugins/godcmd/godcmd.py:/app/plugins/godcmd/godcmd.py
     environment:
