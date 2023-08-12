@@ -44,7 +44,7 @@
     "baidu_dev_pid": "1536",
     "azure_voice_api_key": "",
     "azure_voice_region": "japaneast",
-    "chat_time_module": True,
+    "chat_time_module": true,
     "chat_start_time": "06:00",
     "chat_stop_time": "24:00",
     "translate": "baidu",
