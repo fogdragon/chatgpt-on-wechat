@@ -6,7 +6,10 @@ services:
     security_opt:
       - seccomp:unconfined
     volumes:
-      - /data/ChatGPT-on-WeChat-0806/:/app/
+      - /data/ChatGPT-on-WeChat-0806/app.py:/app/app.py
+      - /data/ChatGPT-on-WeChat-0806/bot/:/app/bot/
+      - /data/ChatGPT-on-WeChat-0806/config.json:/app/config.json
+      - /data/ChatGPT-on-WeChat-0806/plugins/godcmd/godcmd.py:/app/plugins/godcmd/godcmd.py
     environment:
       OPEN_AI_API_KEY: ''
       MODEL: 'gpt-3.5-turbo-16k-0613'

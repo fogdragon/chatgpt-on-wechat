@@ -177,6 +177,7 @@ def get_help_text(isadmin, isgroup):
 class Godcmd(Plugin):
     def __init__(self):
         super().__init__()
+        logger.info("[Hello] inited")
 
         config_path = os.path.join(os.path.dirname(__file__), "config.json")
         gconf = super().load_config()
