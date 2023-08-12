@@ -44,10 +44,18 @@ class WechatComAppChannel(ChatChannel):
 
     def startup(self):
         # start message listener
+
+        # 定义 URL 路径和对应的处理逻辑类
+        # 当请求路径为 "/wxcomapp" 时，将会调用 "channel.wechatcom.wechatcomapp_channel.Query" 中的处理逻辑。
         urls = ("/wxcomapp", "channel.wechatcom.wechatcomapp_channel.Query")
+        # 创建 Web 应用实例，URL 路径映射和全局变量传递给这个应用。
         app = web.application(urls, globals(), autoreload=False)
+        # 从配置文件中获取端口号，默认为 9898
         port = conf().get("wechatcomapp_port", 9898)
+        # 在指定 IP 地址（即监听所有可用的网络接口）和端口上运行 Web 应用
+        # app.wsgifunc() 返回一个 WSGI callable 对象，
         web.httpserver.runsimple(app.wsgifunc(), ("0.0.0.0", port))
+        logger.info("[wechatcom] port:{} urls:{}".format(port, urls))
 
     def send(self, reply: Reply, context: Context):
         receiver = context["receiver"]
