@@ -64,7 +64,7 @@
     "wechatcomapp_agent_id": "1000016",
     "wechatcomapp_aes_key": "8aidHKTzRTBgIZaUSkmC5htfDB6N6ETkZrQAg95aHmB",
     "clear_memory_commands": ["#清除记忆"],
-    "channel_type": "wxy",
+    "channel_type": "wechatcom_app",
     "subscribe_msg": "",
     "debug": true,
     "appdata_dir": "",
