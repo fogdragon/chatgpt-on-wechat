@@ -33,7 +33,7 @@ def time_checker(f):
             else:
                 logger.info("非服务时间内，小助手休息了。")
                 return None
-                # if args[0]["Content"].text == "#更新配置":  # 不在服务时间内也可以更新配置
+                # if args[0]["Content"] == "#更新配置":  # 不在服务时间内也可以更新配置
                 #     f(self, *args, **kwargs)
                 # else:
                 #     logger.info("非服务时间内，小助手休息了。")
