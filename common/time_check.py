@@ -27,6 +27,7 @@ def time_checker(f):
 
             # 服务时间检查
             now_time = time.strftime("%H:%M", time.localtime())
+            logger.info("{}".format(now_time))
             if chat_start_time <= now_time <= chat_stopt_time:  # 服务时间内，正常返回回答
                 f(self, *args, **kwargs)
                 return None
