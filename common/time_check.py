@@ -31,10 +31,10 @@ def time_checker(f):
                 f(self, *args, **kwargs)
                 return None
             else:
-                if args[0]["Content"] == "#更新配置":  # 不在服务时间内也可以更新配置
+                if args[0]["Content"].text == "#更新配置":  # 不在服务时间内也可以更新配置
                     f(self, *args, **kwargs)
                 else:
-                    logger.info("非服务时间内,不接受访问")
+                    logger.info("非服务时间内，小助手休息了。")
                     return None
         else:
             f(self, *args, **kwargs)  # 未开启时间模块则直接回答
